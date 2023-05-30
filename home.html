@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+   
+</head>
+<body>
+    <div class="container">
+        <h1>welcome To BookWorm</h1>
+        <hr>
+        <h2>All Our Books</h2>
+        <div id="bookList"></div>
+    </div>
+
+    <script>
+        const MY_SERVER = 'https://p-library14.onrender.com';
+
+        const loadData = async () => {
+            const res = await axios.get(`${MY_SERVER}`);
+            console.log(res.data);
+
+            const bookList = document.getElementById('bookList');
+            bookList.innerHTML = res.data.map((book) => `
+            <div class="col">
+                <div class="card h-100">
+                    <img class="card-img-top" src="${book.coverImage}" alt="Book Cover Image">
+                    <div class="card-body">
+                        <h5 class="card-title">${book.Name}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">${book.Author}</h6>
+                        <p class="card-text">${book.Description}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Type: ${book.Type}</li>
+                            <li class="list-group-item">Year: ${book.YearPublished}</li>
+                        </ul>
+                        <button class="btn btn-primary">Rent</button>
+                    </div>
+                </div>
+            </div>
+            `).join('');
+        };
+
+        loadData();
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qepkcKuGrfWx4NKGRz2kMNcq8M2P+IRdBTnOcZjITyVnUVdyCXsG7xWryw1DTAqj"
+            crossorigin="anonymous"></script>
+
+</body>
+</html>
